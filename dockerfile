@@ -1,12 +1,12 @@
 # Start from the official Debian base image
-FROM debian:bullseye-slim
+FROM debian
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 # Update the package list and install required packages
 RUN apt-get update
-RUN apt-get install -y \
-apache2 \
-php \
+RUN apt-get install -y apache2
+RUN mkdir /var/run/apache2
+RUN apt-get install -y php \
 php-mysqli \
 mysql-server \
 vsftpd \
@@ -19,7 +19,6 @@ unzip \
 ca-certificates \
 apt-transport-https \
 && apt-get clean
-RUN mkdir /var/run/apache2
 # Install phpMyAdmin for MySQL administration
 RUN wget -qO - https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz -O /tmp/phpmyadmin.tar.gz \
 && tar -xvzf /tmp/phpmyadmin.tar.gz -C /var/www/html/ \
